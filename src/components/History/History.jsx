@@ -1,7 +1,7 @@
-import { useCovinStore } from "../../store/useStore";
+import { useHistoryStore } from "../../store/useStore";
 
 const History = () => {
-  const history = useCovinStore((state) => state.history);
+  const history = useHistoryStore((state) => state.history);
   return (
     <div className="collapse rounded w-full">
       <input type="checkbox" className="peer" />

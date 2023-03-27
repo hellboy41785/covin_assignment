@@ -1,12 +1,8 @@
-import React from "react";
-import axios from "axios";
 import { PlusSquare } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useEffect } from "react";
 import Card from "../Card/Card";
 import CreateCard from "../Card/CreateCard";
 import History from "../History/History";
-import { useCovinStore } from "../../store/useStore";
 import { useBucketQuery, useCreateBucket } from "../../hooks/useCovinQuery";
 import Loader from "../Loader/Loader";
 

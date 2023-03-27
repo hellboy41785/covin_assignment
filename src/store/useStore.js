@@ -1,15 +1,8 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import axios from "axios";
 
 export const useCovinStore = create()(
   devtools((set) => ({
-    bucket: [],
-    fetchBucket: async () => {
-      const res = await axios.get(`/api/products`);
-      set({ bucket: res.data });
-    },
-    
     checkedValue: [],
     setCheckedValue: (by) =>
       set((state) => ({ checkedValue: [...state.checkedValue, by] })),
@@ -17,11 +10,26 @@ export const useCovinStore = create()(
       set((state) => ({
         checkedValue: state.checkedValue.filter((el) => el !== by),
       })),
-
-    history: [],
-    setHistory: (value) =>
-      set((state) => ({ history: [value, ...state.history] })),
-    updateHistory: (value) =>
-      set((state) => ({ history: [value, ...state.history] })),
   }))
+);
+
+export const useHistoryStore = create()(
+  devtools(
+    persist(
+      (set) => ({
+        history: [],
+        setHistory: (value) =>
+          set((state) => ({ history: [value, ...state.history] })),
+        updateHistory: ({ id, time }) =>
+          set((state) => ({
+            history: state.history.map((el) =>
+              el.id === id ? Object.assign({}, el, { time }) : el
+            ),
+          })),
+      }),
+      {
+        name: "history",
+      }
+    )
+  )
 );

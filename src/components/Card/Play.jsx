@@ -1,21 +1,26 @@
 import { PlayCircle } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useCovinStore } from "../../store/useStore";
+import { useHistoryStore } from "../../store/useStore";
 
 const Play = ({ cardData }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const setHistory = useCovinStore((state) => state.setHistory);
-  const history = useCovinStore((state) => state.history);
+  const setHistory = useHistoryStore((state) => state.setHistory);
+  const updateHistory = useHistoryStore((state) => state.updateHistory);
+  const history = useHistoryStore((state) => state.history);
 
   const toggleOpen = () => {
     const date = new Date().toLocaleTimeString();
+    const findHistory = history.find((el) => el.id === cardData.id)?.id || null;
 
     setModalOpen(!modalOpen);
-    setHistory({
-      ...cardData,
-      time: date,
-    });
-
+    if (findHistory === null) {
+      setHistory({
+        ...cardData,
+        time: date,
+      });
+    } else {
+      updateHistory({ id: findHistory, time: date });
+    }
   };
 
   return (

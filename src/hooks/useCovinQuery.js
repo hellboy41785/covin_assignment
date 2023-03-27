@@ -11,7 +11,6 @@ const createBucket = async ({ bucket }) => {
     bucket,
     card: [],
   });
-  data();
 };
 
 const createCard = async ({ id, name, url, data }) => {
@@ -32,15 +31,10 @@ const deleteSelectedCard = async ({ checkedValue, data }) => {
   });
 };
 
-const editCard = async ({ data, newName, newUrl, id }) => {
-  const cardToUpdate = data.card.find((card) => card.id === id);
-  if (cardToUpdate) {
-    cardToUpdate.name = newName;
-    cardToUpdate.url = newUrl;
-    await axios.patch(`/api/products/${data.id}`, {
-      card: data.card,
-    });
-  }
+const editCard = async ({ updatedCard,data }) => {
+  await axios.patch(`/api/products/${data.id}`, {
+    card: updatedCard
+  });
 };
 
 const moveCard = async ({ destinationBucket, cardData, data }) => {

@@ -17,8 +17,19 @@ const EditCard = ({ data, cardData }) => {
   const { data: bucket, isLoading } = useBucketQuery();
   if (isLoading) return <></>;
 
+  const updatedCard = data.card.map((card) => {
+    if (card.id === cardData.id) {
+      return {
+        ...card,
+        name: newName,
+        url: newUrl,
+      };
+    }
+    return card;
+  });
+
   const handleSubmit = () => {
-    editCard({ data: data, newName: newName, newUrl: newUrl, id: cardData.id });
+    editCard({ updatedCard: updatedCard, data: data });
     destinationBucket !== null &&
       moveCard({
         destinationBucket: destinationBucket,
@@ -56,7 +67,7 @@ const EditCard = ({ data, cardData }) => {
             </label>
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full"
+              className="dropdown-content flex flex-col menu p-2 shadow bg-base-100 rounded-box w-full h-40 overflow-y-hidden"
             >
               {bucket.map((el) => (
                 <li key={el.id} onClick={() => setDestinationBucket(el)}>
