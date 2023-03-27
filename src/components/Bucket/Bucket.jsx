@@ -9,7 +9,7 @@ import Loader from "../Loader/Loader";
 const Bucket = () => {
   const [bucketName, setBucketName] = useState("");
 
-  const { mutate:createBucket } = useCreateBucket();
+  const { mutate: createBucket } = useCreateBucket();
   const { data: bucket, isLoading } = useBucketQuery();
   if (isLoading) return <Loader />;
 
@@ -29,9 +29,15 @@ const Bucket = () => {
           className="input w-full border-black"
           onChange={(e) => setBucketName(e.target.value)}
         />
-        <div className="cursor-pointer" onClick={() => handleSubmit()}>
+        <button
+          className={`${
+            bucketName === "" && "cursor-not-allowed"
+          } cursor-pointer`}
+          onClick={() => handleSubmit()}
+          disabled={bucketName === "" ? true : false}
+        >
           <PlusSquare size={60} color="#7b7474" weight="fill" />
-        </div>
+        </button>
       </div>
       {/* Buckets */}
 

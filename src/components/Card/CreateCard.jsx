@@ -9,9 +9,20 @@ const CreateCard = ({ data }) => {
 
   const { mutate: createCard } = useCreateCard();
 
+  const handleSubmit = () => {
+    createCard({
+      id: uuidv4(),
+      name: name,
+      url: url,
+      data: data,
+    });
+    setName("");
+    setUrl("");
+  };
+
   return (
     <div>
-      <label htmlFor={`my-modal-${data.id}`}>
+      <label htmlFor={`my-modal-${data.id}`} >
         <FolderSimplePlus
           className="z-10 cursor-pointer"
           size={40}
@@ -30,30 +41,25 @@ const CreateCard = ({ data }) => {
         className="modal cursor-pointer z-20"
       >
         <label className="modal-box relative flex flex-col gap-2" htmlFor="">
-          <p>{data.bucket}</p>
+          <p className="text-2xl">{data.bucket}</p>
           <input
             type="text"
             placeholder="Name for Card"
+            value={name}
             className="input w-full border-black"
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="text"
             placeholder="Url"
+            value={url}
             className="input w-full border-black"
             onChange={(e) => setUrl(e.target.value)}
           />
           <label
             htmlFor={`my-modal-${data.id}`}
             className="btn"
-            onClick={() =>
-              createCard({
-                id: uuidv4(),
-                name: name,
-                url: url,
-                data: data,
-              })
-            }
+            onClick={() => handleSubmit()}
           >
             Submit
           </label>

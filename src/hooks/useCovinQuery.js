@@ -31,9 +31,9 @@ const deleteSelectedCard = async ({ checkedValue, data }) => {
   });
 };
 
-const editCard = async ({ updatedCard,data }) => {
+const editCard = async ({ updatedCard, data }) => {
   await axios.patch(`/api/products/${data.id}`, {
-    card: updatedCard
+    card: updatedCard,
   });
 };
 
